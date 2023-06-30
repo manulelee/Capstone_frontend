@@ -63,7 +63,7 @@ function RegisterPage() {
     <Container fluid className="text-center p-0">
       <div className="py-5 bg-dark" style={{ display: "block", height: "100vh", vhposition: "initial" }}>
         <h2 id="title" className="text-light">
-          Rent to Ride
+          Rent and Ride
         </h2>
         <p className="text-light">New user? Register now!</p>
 

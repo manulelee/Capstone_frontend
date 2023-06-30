@@ -52,9 +52,9 @@ function LoginPage() {
     <Container fluid className="text-center p-0">
       <div className="py-5 bg-dark" style={{ display: "block", height: "100vh", vhposition: "initial" }}>
         <h2 id="title" className="text-light">
-          Rent to Ride
+          Rent and Ride
         </h2>
-        <p className="text-light">Welcome on Rent to Ride!</p>
+        <p className="text-light">Welcome on Rent and Ride!</p>
 
         <Form onSubmit={handleSubmit} className="mt-5">
           <Form.Group className="mb-3 w-25 mx-auto" controlId="username" onChange={handleUsername}>
