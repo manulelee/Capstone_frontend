@@ -60,7 +60,7 @@ function RegisterPage() {
   };
 
   return (
-    <Container fluid className="text-center">
+    <Container fluid className="text-center p-0">
       <div className="py-5 bg-dark" style={{ display: "block", height: "100vh", vhposition: "initial" }}>
         <h2 id="title" className="text-light">
           Rent to Ride
