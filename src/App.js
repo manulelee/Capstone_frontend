@@ -1,14 +1,20 @@
 import { Container } from "react-bootstrap";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavbarComponent from "./components/NavbarComponent";
 import HomeComponent from "./components/HomePageComponent";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import RegisterPage from "./components/RegisterPage";
 
 const App = () => {
   return (
     <Container fluid className="p-0">
       <div className="App">
-        <HomeComponent></HomeComponent>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/" element={<HomeComponent />} />
+          </Routes>
+        </BrowserRouter>
       </div>
     </Container>
   );
