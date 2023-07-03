@@ -89,8 +89,8 @@ class CarouselComponent extends Component {
         )}
         <Carousel cols={4} rows={1} responsiveLayout={this.responsive} loop>
           {this.state.equipment.map((equipment) => (
-            <Carousel.Item>
-              <CarouselCardComponent key={equipment.id} equipment={equipment} />
+            <Carousel.Item key={equipment.id}>
+              <CarouselCardComponent equipment={equipment} />
             </Carousel.Item>
           ))}
         </Carousel>

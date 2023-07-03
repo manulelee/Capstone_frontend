@@ -1,8 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Container, Form } from "react-bootstrap";
+import { getProfile } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
-function LoginPage() {
+const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   let loginDto = {
     username: "",
     password: "",
@@ -40,8 +46,9 @@ function LoginPage() {
         let data = await response.json();
         console.log(data);
         token = data.accessToken;
+        dispatch(getProfile(data.username));
         localStorage.setItem("token", token);
-        window.location.replace("/");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -80,5 +87,5 @@ function LoginPage() {
       </div>
     </Container>
   );
-}
+};
 export default LoginPage;
