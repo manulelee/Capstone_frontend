@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
   let RegisterDto = {
@@ -10,6 +11,9 @@ function RegisterPage() {
     email: "",
     password: "",
   };
+
+  const navigate = useNavigate();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -52,7 +56,8 @@ function RegisterPage() {
         },
       });
       if (response.ok) {
-        window.location.replace("/login");
+        alert("Account created!");
+        navigate("/login");
       }
     } catch (error) {
       console.log("ERRORE: " + error);

@@ -71,7 +71,6 @@ class CarouselComponent extends Component {
   };
 
   componentDidMount() {
-    console.log("Eseguo la fetch (ComponentDidMount)");
     this.getEquipment();
   }
 

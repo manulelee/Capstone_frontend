@@ -6,11 +6,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 import DetailsPage from "./components/DetailsPage";
+import NavbarComponent from "./components/NavbarComponent";
 
 const App = () => {
   return (
     <Container fluid className="p-0">
       <div className="App">
+        <NavbarComponent></NavbarComponent>
         <BrowserRouter>
           <Routes>
             <Route path="/register" element={<RegisterPage />} />

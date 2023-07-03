@@ -8,12 +8,7 @@ const initialState = {
     password: "",
     firstname: "",
     lastname: "",
-    roles: [
-      {
-        id: 2,
-        role: "",
-      },
-    ],
+    roles: [],
   },
 };
 
