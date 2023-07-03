@@ -1,9 +1,9 @@
 import { Component } from "react";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class CarouselCardComponent extends Component {
   render() {
-    console.log(this.props.equipment);
     return (
       <Card className="text-start d-inline-block" style={{ width: "18rem" }}>
         <Card.Img className="card-img" variant="top" src={this.props.equipment.img} />
@@ -21,7 +21,9 @@ class CarouselCardComponent extends Component {
             <span className="fw-bolder">Price: </span>
             {this.props.equipment.price} € / day<br></br>
           </Card.Text>
-          <Button variant="success">Details</Button>
+          <Link to={`/details/${this.props.equipment.id}`}>
+            <div className="btn btn-success">Details</div>
+          </Link>
         </Card.Body>
       </Card>
     );

@@ -87,14 +87,13 @@ class CarouselComponent extends Component {
             {this.state.isError && <Alert variant="danger">Error while loading</Alert>}
           </div>
         )}
-        <Carousel responsiveLayout={this.responsive} loop={true}>
-          {this.state.equipment.map((equipment, index) => (
+        <Carousel cols={4} rows={1} responsiveLayout={this.responsive} loop>
+          {this.state.equipment.map((equipment) => (
             <Carousel.Item>
-              <CarouselCardComponent key={index} equipment={equipment} />
+              <CarouselCardComponent key={equipment.id} equipment={equipment} />
             </Carousel.Item>
           ))}
         </Carousel>
-        <Carousel className="mx-4"></Carousel>
       </>
     );
   }
