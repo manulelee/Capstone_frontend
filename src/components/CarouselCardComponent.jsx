@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 class CarouselCardComponent extends Component {
   render() {
     return (
-      <Card className="text-start d-inline-block" style={{ width: "18rem" }}>
+      <Card className="text-start d-inline-block carouselCard">
         <Card.Img className="card-img" variant="top" src={this.props.equipment.img} />
         <Card.Body>
           <Card.Title className="text-center">

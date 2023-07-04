@@ -1,6 +1,5 @@
 import { Component } from "react";
 import Carousel from "react-grid-carousel";
-//import "react-multi-carousel/lib/styles.css";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import CarouselCardComponent from "./CarouselCardComponent";
@@ -15,32 +14,24 @@ class CarouselComponent extends Component {
 
   responsive = [
     {
-      breakpoint: 3000,
-      cols: 6,
-      rows: 1,
-      loop: true,
-      autoplay: 10000,
+      breakpoint: 1400,
+      cols: 5,
     },
     {
-      breakpoint: 1024,
-      items: 5,
-      rows: 1,
-      loop: true,
-      autoplay: 10000,
+      breakpoint: 1198,
+      cols: 4,
     },
     {
-      breakpoint: 464,
-      items: 4,
-      rows: 1,
-      loop: true,
-      autoplay: 10000,
+      breakpoint: 780,
+      cols: 3,
     },
     {
-      breakpoint: 0,
-      items: 2,
-      rows: 1,
-      loop: true,
-      autoplay: 10000,
+      breakpoint: 680,
+      cols: 2,
+    },
+    {
+      breakpoint: 400,
+      cols: 1,
     },
   ];
 
@@ -86,7 +77,7 @@ class CarouselComponent extends Component {
             {this.state.isError && <Alert variant="danger">Error while loading</Alert>}
           </div>
         )}
-        <Carousel cols={4} rows={1} responsiveLayout={this.responsive} loop>
+        <Carousel cols={6} responsiveLayout={this.responsive} mobileBreakpoint={500} loop autoplay={8000}>
           {this.state.equipment.map((equipment) => (
             <Carousel.Item key={equipment.id}>
               <CarouselCardComponent equipment={equipment} />

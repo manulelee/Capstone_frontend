@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 function DetailsPage() {
   const profile = useSelector((state) => state.profile);
   const isAdmin = profile.roles.length >= 2;
-  const isUser = profile.roles.length == 1;
+  const isUser = profile.roles.length === 1;
 
   let today = new Date().toISOString().split("T")[0];
 
@@ -37,10 +37,12 @@ function DetailsPage() {
       }
     } catch (error) {
       console.log(error);
+      alert(error);
     }
   };
   useEffect(() => {
     getItem();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteEquipment = async () => {
@@ -54,6 +56,8 @@ function DetailsPage() {
       if (response.ok) {
         alert("Prodotto eliminato correttamente");
         navigate("/");
+      } else if (response.status === 500) {
+        alert("Impossibile eliminare \n Alcune prenotazioni sono associate a questo prodotto...");
       }
     } catch (error) {
       console.log("ERRORE: " + error);
@@ -78,7 +82,7 @@ function DetailsPage() {
       if (response.ok) {
         alert("Prenotazione effettuata correttamente");
         navigate("/");
-      } else if (response.status == 401) {
+      } else if (response.status === 401) {
         alert("Prodotto non disponibile per la data " + booking.day);
       }
     } catch (error) {

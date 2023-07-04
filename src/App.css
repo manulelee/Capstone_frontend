@@ -7,11 +7,18 @@ body {
   font-size: 2em;
 }
 
-div .card {
+div .carouselCard {
   height: 522px;
+  width: 100%;
 }
 
-div .card button {
+div .carouselCard .btn {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
+}
+
+.navbar .nav-link,
+.navbar a {
+  text-decoration: none;
+  color: white;
 }
