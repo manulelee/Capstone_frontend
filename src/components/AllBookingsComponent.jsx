@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { AiOutlineCalendar } from "react-icons/ai";
 
 function AllBookingComponent() {
   const [booking, setBooking] = useState([]);
@@ -30,36 +31,41 @@ function AllBookingComponent() {
 
   return (
     <>
-      <Container className="p-0">
+      <Container fluid>
         <h3 className="mt-3 mx-0">Lista prenotazioni:</h3>
         {booking
           .sort((a, b) => new Date(a.day) - new Date(b.day))
           .map((booking) => (
-            <Row key={booking.id}>
-              <Card className="d-flex flex-row mt-2">
-                <Col xs={3}>
-                  <Card.Img src={booking.equipment.img} className="w-100" />
-                </Col>
-                <Col xs={9}>
-                  <Card.Body>
-                    <Card.Title>
-                      {booking.user.firstname} {booking.user.lastname}
-                    </Card.Title>
-                    <Card.Text>
-                      {booking.equipment.brand} <br />
-                      {booking.equipment.model} <br />
-                      {booking.equipment.category} <br />
-                      {booking.day} <br />
-                      {booking.equipment.price} €
-                    </Card.Text>
-                    <div className="d-flex justify-content-between">
-                      <Button href={"mailto:" + booking.user.email} target="_blank" className="me-3 btn-danger">
-                        Contatta cliente
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Col>
-              </Card>
+            <Row key={booking.id} className="border broder-dark rounded mt-4 py-2">
+              <Col xs={12} md={3}>
+                <img
+                  src={booking.equipment.img}
+                  alt={"Product " + booking.equipment.id + " image"}
+                  onError={(event) =>
+                    (event.target.src =
+                      "https://cdn.icon-icons.com/icons2/1189/PNG/512/1490793840-user-interface33_82361.png")
+                  }
+                  className="w-100"
+                />
+              </Col>
+              <Col xs={12} md={8}>
+                <h2>
+                  {booking.user.firstname} {booking.user.lastname}
+                </h2>
+                <span className="fw-bold">Brand: </span>
+                {booking.equipment.brand} <br />
+                <span className="fw-bold">Model: </span>
+                {booking.equipment.model} <br />
+                <span className="fw-bold">Data: </span>
+                {booking.day.split("-")[0] + "/" + booking.day.split("-")[1] + "/" + booking.day.split("-")[2]}
+                <br />
+                <span className="fw-bold">Prezzo: </span> {booking.equipment.price} €
+                <div className="d-flex justify-content-between">
+                  <Button href={"mailto:" + booking.user.email} target="_blank" className="mt-3 btn-danger">
+                    Contatta cliente
+                  </Button>
+                </div>
+              </Col>
             </Row>
           ))}
       </Container>

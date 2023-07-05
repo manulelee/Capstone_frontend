@@ -22,9 +22,7 @@ function NavbarComponent() {
   return (
     <Navbar expand="lg" data-bs-theme="dark" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand id="title" href="/">
-          🏝️ Rent and ride
-        </Navbar.Brand>
+        <Navbar.Brand id="title">🏝️ Rent and ride</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto d-flex justify-content-between w-100">

@@ -111,17 +111,25 @@ function DetailsPage() {
     <Container className="mt-5">
       <Row>
         <Col xs={12} md={6} className="d-flex justify-content-center">
-          <img src={equipment.img} alt={"product " + equipment.id + " img"} className="w-75"></img>
+          <img
+            src={equipment.img}
+            alt={"Product " + equipment.id + " image"}
+            onError={(event) =>
+              (event.target.src =
+                "https://cdn.icon-icons.com/icons2/1189/PNG/512/1490793840-user-interface33_82361.png")
+            }
+            className="w-75"
+          ></img>
         </Col>
         <Col xs={12} md={6} className="mt-5">
           <h2>{equipment.model}</h2>
           <p>{equipment.description}</p>
           <p>
-            <span className="fw-bold">Price: </span> {equipment.price} € / day
+            <span className="fw-bold">Misure: </span>
+            {equipment.size}
           </p>
           <p>
-            <span className="fw-bold">Size: </span>
-            {equipment.size}
+            <span className="fw-bold">Prezzo: </span> {equipment.price} € /giorno
           </p>
           {!isAdmin && !isUser && (
             <>

@@ -10,6 +10,7 @@ import NavbarComponent from "./components/NavbarComponent";
 import UserBookingComponent from "./components/UserBookingComponent";
 import AllBookingComponent from "./components/AllBookingsComponent";
 import EditEquipmentComponent from "./components/EditEquipmentComponent";
+import CategoryPageComponent from "./components/CategoryPageComponent";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<HomeComponent />} />
             <Route path="/details/:id" element={<DetailsPage />} />
+            <Route path="/categories/:category" element={<CategoryPageComponent />} />
             <Route path="/edit/:id" element={<EditEquipmentComponent />} />
             <Route path="/bookings" element={<UserBookingComponent />} />
             <Route path="/allBookings" element={<AllBookingComponent />} />
