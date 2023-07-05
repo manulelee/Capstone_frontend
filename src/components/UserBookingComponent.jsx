@@ -58,7 +58,7 @@ function UserBookingComponent() {
         {booking
           .sort((a, b) => new Date(a.day) - new Date(b.day))
           .map((booking) => (
-            <Row>
+            <Row key={booking.id}>
               <Card className="d-flex flex-row mt-2">
                 <Col xs={3}>
                   <Card.Img src={booking.equipment.img} className="w-100" />

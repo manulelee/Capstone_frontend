@@ -22,3 +22,7 @@ div .carouselCard .btn {
   text-decoration: none;
   color: white;
 }
+
+body .card .card-img {
+  aspect-ratio: 0.9/1;
+}

@@ -125,7 +125,7 @@ function DetailsPage() {
           </p>
           {!isAdmin && !isUser && (
             <>
-              <p>Effettua il login e prenota ora!</p>
+              <p className="mt-5">Effettua il login e prenota ora!</p>
               <Button type="button" className="btn btn-success" onClick={() => navigate("/login")}>
                 LOGIN
               </Button>
@@ -142,9 +142,14 @@ function DetailsPage() {
             </Form>
           )}
           {isAdmin && (
-            <Button type="button" className="btn btn-danger" onClick={deleteEquipment}>
-              ELIMINA
-            </Button>
+            <>
+              <Button type="button" className="btn btn-danger me-2" onClick={deleteEquipment}>
+                ELIMINA
+              </Button>
+              <Button type="button" className="btn btn-warning " onClick={() => navigate(`/edit/${equipment.id}`)}>
+                MODIFICA
+              </Button>
+            </>
           )}
         </Col>
       </Row>
