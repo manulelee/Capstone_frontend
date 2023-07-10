@@ -31,7 +31,7 @@ function AllBookingComponent() {
 
   return (
     <>
-      <Container fluid>
+      <Container>
         <h3 className="mt-3 mx-0">Lista prenotazioni:</h3>
         {booking
           .sort((a, b) => new Date(a.day) - new Date(b.day))

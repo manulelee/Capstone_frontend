@@ -74,7 +74,7 @@ class CarouselComponent extends Component {
             <Spinner animation="border" role="status" variant="danger">
               <span className="visually-hidden">Loading...</span>
             </Spinner>
-            {this.state.isError && <Alert variant="danger">Error while loading</Alert>}
+            {this.state.isError && <Alert variant="danger">Errore nel caricamento</Alert>}
           </div>
         )}
         <Carousel cols={6} responsiveLayout={this.responsive} mobileBreakpoint={500} loop autoplay={8000}>

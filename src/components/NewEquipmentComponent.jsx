@@ -84,7 +84,10 @@ function NewEquipmentComponent() {
 
   return (
     <>
-      <div className="dropdown-item" onClick={handleShow}>
+      <div className="dropdown-item d-none d-lg-flex" onClick={handleShow}>
+        Inserisci prodotto
+      </div>
+      <div className="nav-link d-lg-none" onClick={handleShow}>
         Inserisci prodotto
       </div>
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
