@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
@@ -19,6 +19,9 @@ function RegisterPage() {
   const [email, setEmail] = useState("");
   const [pass, setPassword] = useState("");
   const [user, setUsername] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     register(RegisterDto);
@@ -47,6 +50,8 @@ function RegisterPage() {
     RegisterDto.username = user;
     RegisterDto.email = email;
     RegisterDto.password = pass;
+    setIsError(false);
+    setIsLoading(true);
     try {
       let response = await fetch("http://localhost:8080/api/auth/register", {
         method: "POST",
@@ -56,8 +61,12 @@ function RegisterPage() {
         },
       });
       if (response.ok) {
+        setIsLoading(false);
         alert("Account created!");
         navigate("/login");
+      } else {
+        setIsLoading(false);
+        setIsError(true);
       }
     } catch (error) {
       console.log("ERRORE: " + error);
@@ -65,14 +74,11 @@ function RegisterPage() {
   };
 
   return (
-    <Container fluid className="text-center p-0">
-      <div className="py-5 bg-dark" style={{ display: "block", height: "100vh", vhposition: "initial" }}>
-        <h2 id="title" className="text-light">
-          Rent and Ride
-        </h2>
-        <p className="text-light">New user? Register now!</p>
+    <Container fluid className="text-center mb-5">
+      <div className="py-5 ">
+        <p>Nuovo utente? Registrati ora!</p>
 
-        <Form onSubmit={handleSubmit} className="mt-5">
+        <Form onSubmit={handleSubmit} className="mt-5 mb-5">
           <Form.Group className="mb-3 w-25 mx-auto" controlId="firstName" onChange={handleFirstName}>
             <Form.Control type="text" required placeholder="insert first name.." />
           </Form.Group>
@@ -88,9 +94,17 @@ function RegisterPage() {
           <Form.Group className="mb-3 w-25 mx-auto" controlId="password" onChange={handlePassword}>
             <Form.Control type="password" required placeholder="insert password.." />
           </Form.Group>
-          <Button type="submit" className="btn btn-dark btn-outline-success my-2 w-25 ">
+          <Button type="submit" className="btn btn-light btn-outline-success my-2 w-25 ">
             Register
           </Button>
+          {isLoading && (
+            <div className="w-100">
+              <Spinner animation="border" role="status" variant="success" className="mx-auto">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div>
+          )}
+          {isError && <p>Username o email già associata ad un account</p>}
         </Form>
       </div>
     </Container>

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import { AiOutlineCalendar } from "react-icons/ai";
 
 function AllBookingComponent() {
   const [booking, setBooking] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   const getBookings = async () => {
     try {
@@ -16,8 +18,11 @@ function AllBookingComponent() {
         let data = await response.json();
         console.log(data);
         setBooking(data);
+        setIsLoading(false);
       } else {
         console.log("Errore nella ricezione dei dati");
+        setIsError(true);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log("ERRORE: " + error);
@@ -33,6 +38,12 @@ function AllBookingComponent() {
     <>
       <Container>
         <h3 className="mt-3 mx-0">Lista prenotazioni:</h3>
+        {isLoading && (
+          <Spinner animation="border" role="status" variant="danger" className="mx-auto">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
+        {isError && <p>Errore nella ricezione dei dati</p>}
         {booking
           .sort((a, b) => new Date(a.day) - new Date(b.day))
           .map((booking) => (

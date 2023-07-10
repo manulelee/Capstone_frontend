@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { useSelector } from "react-redux";
 
 function UserBookingComponent() {
   const profile = useSelector((state) => state.profile);
   const [booking, setBooking] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   const getBookings = async () => {
     try {
@@ -18,8 +20,11 @@ function UserBookingComponent() {
         let data = await response.json();
         console.log(data);
         setBooking(data);
+        setIsLoading(false);
       } else {
         console.log("Errore nella ricezione dei dati");
+        setIsLoading(false);
+        setIsError(true);
       }
     } catch (error) {
       console.log("ERRORE: " + error);
@@ -55,7 +60,15 @@ function UserBookingComponent() {
     <>
       <Container>
         <h3 className="mt-3 mx-0">Le mie prenotazioni:</h3>
-        {booking.length === 0 && <p className="mt-3">Non hai ancora effettuato nessuna prenotazione</p>}
+        {isLoading && (
+          <Spinner animation="border" role="status" variant="danger" className="mx-auto">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
+        {isError && <p>Errore nella ricezione dei dati</p>}
+        {booking.length === 0 && isLoading === false && (
+          <p className="mt-3">Non hai ancora effettuato nessuna prenotazione</p>
+        )}
         {booking
           .sort((a, b) => new Date(a.day) - new Date(b.day))
           .map((booking) => (

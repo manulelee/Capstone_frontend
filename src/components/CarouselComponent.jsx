@@ -22,15 +22,15 @@ class CarouselComponent extends Component {
       cols: 4,
     },
     {
-      breakpoint: 780,
+      breakpoint: 910,
       cols: 3,
     },
     {
-      breakpoint: 680,
+      breakpoint: 650,
       cols: 2,
     },
     {
-      breakpoint: 400,
+      breakpoint: 480,
       cols: 1,
     },
   ];
@@ -68,7 +68,7 @@ class CarouselComponent extends Component {
   render() {
     return (
       <>
-        <h2 className="text-start mt-5 mb-2 b mx-4">{this.props.category} equipment:</h2>
+        <h2 className="text-start mt-5 mb-2 b mx-4">{this.props.category}:</h2>
         {this.state.isLoading && (
           <div className="text-center">
             <Spinner animation="border" role="status" variant="danger">

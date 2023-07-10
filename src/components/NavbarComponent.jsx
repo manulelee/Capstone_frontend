@@ -63,11 +63,11 @@ function NavbarComponent() {
                   >
                     {!profile.username && (
                       <Link to={"/login"} className="text-decoration-none">
-                        <div className="dropdown-item btn btn-success ">Login</div>
+                        <div className="dropdown-item btn btn-transparent">Login</div>
                       </Link>
                     )}
                     {profile.username && (
-                      <div className="dropdown-item btn btn-danger" onClick={() => logout()}>
+                      <div className="dropdown-item btn btn-transparent" onClick={() => logout()}>
                         Logout
                       </div>
                     )}

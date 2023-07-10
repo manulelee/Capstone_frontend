@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form, Spinner } from "react-bootstrap";
 import { getProfile } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
@@ -18,6 +18,9 @@ const LoginPage = () => {
 
   const [pass, setPassword] = useState("");
   const [user, setUsername] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     getToken(loginDto);
@@ -34,7 +37,9 @@ const LoginPage = () => {
   const getToken = async (loginDto) => {
     loginDto.username = user;
     loginDto.password = pass;
+    setIsLoading(true);
     try {
+      setIsError(false);
       let response = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
         body: JSON.stringify(loginDto),
@@ -48,7 +53,11 @@ const LoginPage = () => {
         token = data.accessToken;
         dispatch(getProfile(data.username));
         localStorage.setItem("token", token);
+        setIsLoading(false);
         navigate("/");
+      } else {
+        setIsError(true);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -56,12 +65,12 @@ const LoginPage = () => {
   };
 
   return (
-    <Container fluid className="text-center p-0">
-      <div className="py-5 bg-dark" style={{ display: "block", height: "100vh", vhposition: "initial" }}>
-        <h2 id="title" className="text-light">
-          Rent and Ride
-        </h2>
-        <p className="text-light">Welcome on Rent and Ride!</p>
+    <Container fluid className="text-center mt-2 mb-5">
+      <div className="py-5 my-5">
+        <p className="">
+          Benvenuto su Rent and Ride
+          <br /> Effettua il login e prenota subito!
+        </p>
 
         <Form onSubmit={handleSubmit} className="mt-5">
           <Form.Group className="mb-3 w-25 mx-auto" controlId="username" onChange={handleUsername}>
@@ -70,7 +79,8 @@ const LoginPage = () => {
           <Form.Group className="mb-3 w-25 mx-auto" controlId="password" onChange={handlePassword}>
             <Form.Control required type="password" placeholder="insert password.." />
           </Form.Group>
-          <Button type="submit" className="btn btn-dark btn-outline-warning my-2 w-25 ">
+
+          <Button type="submit" className="btn btn-light btn-outline-warning my-2 w-25 ">
             Login
           </Button>
         </Form>
@@ -82,8 +92,16 @@ const LoginPage = () => {
             window.location.replace("/register");
           }}
         >
-          Register now!
+          Registrati
         </button>
+        {isLoading && (
+          <div className="w-100">
+            <Spinner animation="border" role="status" variant="success" className="mx-auto">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        )}
+        {isError && <p>Username o password errati</p>}
       </div>
     </Container>
   );

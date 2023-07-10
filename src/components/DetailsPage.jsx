@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -13,7 +13,8 @@ function DetailsPage() {
   const { id } = useParams();
 
   const navigate = useNavigate();
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [equipment, setEquipment] = useState({
     id: "",
     brand: "",
@@ -32,8 +33,11 @@ function DetailsPage() {
         let data = await response.json();
         console.log(data);
         setEquipment(data);
+        setIsLoading(false);
       } else {
         console.log("Errore nella ricezione dei dati");
+        setIsError(true);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -109,6 +113,12 @@ function DetailsPage() {
 
   return (
     <Container className="mt-5">
+      {isLoading && (
+        <Spinner animation="border" role="status" variant="danger" className="mx-auto">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      )}
+      {isError && <p>Errore nella ricezione dei dati</p>}
       <Row>
         <Col xs={12} md={6} className="d-flex justify-content-center">
           <img

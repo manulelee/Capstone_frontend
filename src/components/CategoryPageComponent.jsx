@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 
 function CategoryPageComponent() {
   const { category } = useParams();
   const [equipment, setEquipment] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const getCategoryItems = async () => {
     try {
       let response = await fetch(`http://localhost:8080/api/equipment/category/${category.toUpperCase()}`);
@@ -12,8 +14,11 @@ function CategoryPageComponent() {
         let data = await response.json();
         console.log(data);
         setEquipment(data);
+        setIsLoading(false);
       } else {
         console.log("Errore nella ricezione dei dati");
+        setIsLoading(false);
+        setIsError(true);
       }
     } catch (error) {
       console.log(error);
@@ -29,6 +34,12 @@ function CategoryPageComponent() {
     <>
       <Container className="p-0">
         <h3 className="mt-3 mx-0">Attrezzatura {category}:</h3>
+        {isLoading && (
+          <Spinner animation="border" role="status" variant="danger" className="mx-auto">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
+        {isError && <p>Errore nella ricezione dei dati</p>}
         {equipment.map((equipment) => (
           <Row key={equipment.id} className="border broder-dark rounded mt-4 py-2 mx-1">
             <Col xs={12} md={3}>

@@ -11,6 +11,8 @@ import UserBookingComponent from "./components/UserBookingComponent";
 import AllBookingComponent from "./components/AllBookingsComponent";
 import EditEquipmentComponent from "./components/EditEquipmentComponent";
 import CategoryPageComponent from "./components/CategoryPageComponent";
+import FooterComponent from "./components/FooterComponent";
+import NotFoundComponent from "./components/NotFoundComponent";
 
 const App = () => {
   return (
@@ -27,7 +29,9 @@ const App = () => {
             <Route path="/edit/:id" element={<EditEquipmentComponent />} />
             <Route path="/bookings" element={<UserBookingComponent />} />
             <Route path="/allBookings" element={<AllBookingComponent />} />
+            <Route path="/*" element={<NotFoundComponent />} />
           </Routes>
+          <FooterComponent />
         </BrowserRouter>
       </div>
     </Container>
