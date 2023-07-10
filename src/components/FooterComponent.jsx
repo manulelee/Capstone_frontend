@@ -33,12 +33,8 @@ function FooterComponent() {
             <h5 className="mb-4 mt-3">About us</h5>
             <ul className="list-unstyled">
               <li>
-                <Link
-                  to="https://www.linkedin.com/in/emanuele-syrbe-024a1626b/"
-                  className="text-decoration-none text-light"
-                  target="_blank"
-                >
-                  Emanuele Syrbe
+                <Link to="https://github.com/manulelee" className="text-decoration-none text-light" target="_blank">
+                  Info
                 </Link>
               </li>
             </ul>

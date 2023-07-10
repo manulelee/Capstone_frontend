@@ -29,7 +29,7 @@ const App = () => {
             <Route path="/edit/:id" element={<EditEquipmentComponent />} />
             <Route path="/bookings" element={<UserBookingComponent />} />
             <Route path="/allBookings" element={<AllBookingComponent />} />
-            <Route path="/*" element={<NotFoundComponent className="my-5 py-5" />} />
+            <Route path="/*" element={<NotFoundComponent />} />
           </Routes>
           <FooterComponent />
         </BrowserRouter>
