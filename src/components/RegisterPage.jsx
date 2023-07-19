@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { Button, Container, Form, Spinner } from "react-bootstrap";
+import { Alert, Button, Container, Form, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
@@ -21,6 +21,11 @@ function RegisterPage() {
   const [user, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const [show, setShow] = useState(false);
+  const [relocate, setRelocate] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
+  const [alertHeading, setAlertHeading] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -61,9 +66,10 @@ function RegisterPage() {
         },
       });
       if (response.ok) {
-        setIsLoading(false);
-        alert("Account created!");
-        navigate("/login");
+        setAlertHeading("Resgistrazione");
+        setAlertMsg("Utente registrato correttamente");
+        setShow(true);
+        setRelocate(true);
       } else {
         setIsLoading(false);
         setIsError(true);
@@ -74,8 +80,21 @@ function RegisterPage() {
   };
 
   return (
-    <Container fluid className="text-center mb-5">
+    <Container fluid className="text-center mb-5 page-container">
       <div className="py-5 ">
+        {show && (
+          <Alert
+            variant="light"
+            onClose={() => {
+              setShow(false);
+              relocate && navigate("/login");
+            }}
+            dismissible
+          >
+            <Alert.Heading>{alertHeading}</Alert.Heading>
+            <p>{alertMsg}</p>
+          </Alert>
+        )}
         <p>Nuovo utente? Registrati ora!</p>
 
         <Form onSubmit={handleSubmit} className="mt-5 mb-5">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
-import { AiOutlineCalendar } from "react-icons/ai";
+import { Alert, Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+
 import { useSelector } from "react-redux";
 
 function UserBookingComponent() {
@@ -8,6 +8,11 @@ function UserBookingComponent() {
   const [booking, setBooking] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+
+  const [show, setShow] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
+  const [alertHeading, setAlertHeading] = useState("");
+  const [showExpired, setShowExpired] = useState(true);
 
   const getBookings = async () => {
     try {
@@ -41,13 +46,14 @@ function UserBookingComponent() {
       if (response.ok) {
         let data = await response;
         console.log(data);
-        alert("Prenotazione eliminata correttamente");
-        getBookings();
-      } else {
-        console.log("Errore nell'eliminazione della prenotazione");
+        setAlertHeading("Elimina prenotazione");
+        setAlertMsg("Prenotazione eliminata correttamente");
+        setShow(true);
       }
     } catch (error) {
-      console.log("ERRORE: " + error);
+      setAlertHeading("Elimina prenotazione");
+      setAlertMsg("Errore nell'eliminazione della prenotazione");
+      setShow(true);
     }
   };
 
@@ -58,8 +64,18 @@ function UserBookingComponent() {
 
   return (
     <>
-      <Container>
-        <h3 className="mt-3 mx-0">Le mie prenotazioni:</h3>
+      <Container className="page-container">
+        <span className="d-flex justify-content-between">
+          <h3 className="mt-3 mx-0">Le mie prenotazioni:</h3>
+          <Form className="align-self-end">
+            <Form.Check // prettier-ignore
+              type="switch"
+              id="switch"
+              label="Nascondi scadute"
+              onChange={() => setShowExpired(!showExpired)}
+            />
+          </Form>
+        </span>
         {isLoading && (
           <Spinner animation="border" role="status" variant="danger" className="mx-auto">
             <span className="visually-hidden">Loading...</span>
@@ -69,39 +85,90 @@ function UserBookingComponent() {
         {booking.length === 0 && isLoading === false && (
           <p className="mt-3">Non hai ancora effettuato nessuna prenotazione</p>
         )}
-        {booking
-          .sort((a, b) => new Date(a.day) - new Date(b.day))
-          .map((booking) => (
-            <Row key={booking.id} className="border broder-dark rounded mt-4 py-1">
-              <Col xs={12} md={3}>
-                <img
-                  src={booking.equipment.img}
-                  alt={"Product " + booking.equipment.id + " image"}
-                  onError={(event) =>
-                    (event.target.src =
-                      "https://cdn.icon-icons.com/icons2/1189/PNG/512/1490793840-user-interface33_82361.png")
-                  }
-                  className="w-100"
-                />
-              </Col>
-              <Col xs={12} md={8}>
-                <h2>{booking.equipment.brand}</h2>
-                <span>
-                  <span className="fw-bold">Model: </span>
-                  {booking.equipment.model} <br />
-                  <span className="fw-bold">Data: </span>
-                  {booking.day.split("-")[0] + "/" + booking.day.split("-")[1] + "/" + booking.day.split("-")[2]}
-                  <br />
-                  <span className="fw-bold">Prezzo: </span> {booking.equipment.price} €
-                </span>
-                <div className="d-flex justify-content-between">
-                  <Button className="my-3 btn-danger" onClick={() => deleteBooking(booking.id)}>
-                    Elimina prenotazione
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-          ))}
+        {show && (
+          <Alert
+            variant="light"
+            onClose={() => {
+              setShow(false);
+              getBookings();
+            }}
+            dismissible
+          >
+            <Alert.Heading>{alertHeading}</Alert.Heading>
+            <p>{alertMsg}</p>
+          </Alert>
+        )}
+        {showExpired &&
+          booking
+            .sort((a, b) => new Date(a.day) - new Date(b.day))
+            .map((booking) => (
+              <Row key={booking.id} className="border broder-dark rounded mt-4 py-1">
+                <Col xs={12}></Col>
+                <Col xs={12} md={3}>
+                  <img
+                    src={booking.equipment.img}
+                    alt={"Product " + booking.equipment.id + " image"}
+                    onError={(event) =>
+                      (event.target.src =
+                        "https://cdn.icon-icons.com/icons2/1189/PNG/512/1490793840-user-interface33_82361.png")
+                    }
+                    className="w-100"
+                  />
+                </Col>
+                <Col xs={12} md={8}>
+                  <h2>{booking.equipment.brand}</h2>
+                  <span>
+                    <span className="fw-bold">Model: </span>
+                    {booking.equipment.model} <br />
+                    <span className="fw-bold">Data: </span>
+                    {booking.day.split("-")[0] + "/" + booking.day.split("-")[1] + "/" + booking.day.split("-")[2]}
+                    <br />
+                    <span className="fw-bold">Prezzo: </span> {booking.equipment.price} €
+                  </span>
+                  <div className="d-flex justify-content-between">
+                    <Button className="my-3 btn-danger" onClick={() => deleteBooking(booking.id)}>
+                      Elimina prenotazione
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+            ))}
+        {!showExpired &&
+          booking
+            .sort((a, b) => new Date(a.day) - new Date(b.day))
+            .filter((booking) => booking.day >= new Date().toISOString().split("T")[0])
+            .map((booking) => (
+              <Row key={booking.id} className="border broder-dark rounded mt-4 py-1">
+                <Col xs={12}></Col>
+                <Col xs={12} md={3}>
+                  <img
+                    src={booking.equipment.img}
+                    alt={"Product " + booking.equipment.id + " image"}
+                    onError={(event) =>
+                      (event.target.src =
+                        "https://cdn.icon-icons.com/icons2/1189/PNG/512/1490793840-user-interface33_82361.png")
+                    }
+                    className="w-100"
+                  />
+                </Col>
+                <Col xs={12} md={8}>
+                  <h2>{booking.equipment.brand}</h2>
+                  <span>
+                    <span className="fw-bold">Model: </span>
+                    {booking.equipment.model} <br />
+                    <span className="fw-bold">Data: </span>
+                    {booking.day.split("-")[0] + "/" + booking.day.split("-")[1] + "/" + booking.day.split("-")[2]}
+                    <br />
+                    <span className="fw-bold">Prezzo: </span> {booking.equipment.price} €
+                  </span>
+                  <div className="d-flex justify-content-between">
+                    <Button className="my-3 btn-danger" onClick={() => deleteBooking(booking.id)}>
+                      Elimina prenotazione
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+            ))}
       </Container>
     </>
   );

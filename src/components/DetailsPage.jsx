@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -11,6 +11,11 @@ function DetailsPage() {
   let today = new Date().toISOString().split("T")[0];
 
   const { id } = useParams();
+
+  const [show, setShow] = useState(false);
+  const [relocate, setRelocate] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
+  const [alertHeading, setAlertHeading] = useState("");
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +46,10 @@ function DetailsPage() {
       }
     } catch (error) {
       console.log(error);
-      alert(error);
+      setAlertHeading("Erorre:");
+      setAlertMsg(error);
+      setShow(true);
+      setRelocate(false);
     }
   };
   useEffect(() => {
@@ -58,10 +66,15 @@ function DetailsPage() {
         },
       });
       if (response.ok) {
-        alert("Prodotto eliminato correttamente");
-        navigate("/");
+        setAlertHeading("Elimina prodotto");
+        setAlertMsg("Prodotto eliminato correttamente");
+        setShow(true);
+        setRelocate(true);
       } else if (response.status === 500) {
-        alert("Impossibile eliminare \n Alcune prenotazioni sono associate a questo prodotto...");
+        setAlertHeading("Elimina prodotto");
+        setAlertMsg("Impossibile eliminare \n Alcune prenotazioni sono associate a questo prodotto...");
+        setShow(true);
+        setRelocate(false);
       }
     } catch (error) {
       console.log("ERRORE: " + error);
@@ -84,10 +97,15 @@ function DetailsPage() {
         },
       });
       if (response.ok) {
-        alert("Prenotazione effettuata correttamente");
-        navigate("/");
+        setAlertHeading("Prenota prodotto");
+        setAlertMsg("Prenotazione effettuata correttamente");
+        setShow(true);
+        setRelocate(true);
       } else if (response.status === 401) {
-        alert("Prodotto non disponibile per la data " + booking.day);
+        setAlertHeading("Prenota prodotto");
+        setAlertMsg("Prodotto non disponibile per la data " + booking.day);
+        setShow(true);
+        setRelocate(false);
       }
     } catch (error) {
       console.log("ERRORE: " + error);
@@ -105,14 +123,30 @@ function DetailsPage() {
     console.log(event.target.value);
     console.log(today);
     if (event.target.value < today) {
-      alert("Non puoi prenotare per un giorno già passato");
+      setAlertHeading("Prenota prodotto");
+      setAlertMsg("Non puoi prenotare per un giorno già passato");
+      setShow(true);
+      setRelocate(false);
       return;
     }
     setDate(event.target.value);
   };
-
+  window.scrollTo(0, 0);
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 page-container">
+      {show && (
+        <Alert
+          variant="light"
+          onClose={() => {
+            setShow(false);
+            relocate && navigate("/");
+          }}
+          dismissible
+        >
+          <Alert.Heading>{alertHeading}</Alert.Heading>
+          <p>{alertMsg}</p>
+        </Alert>
+      )}
       {isLoading && (
         <Spinner animation="border" role="status" variant="danger" className="mx-auto">
           <span className="visually-hidden">Loading...</span>

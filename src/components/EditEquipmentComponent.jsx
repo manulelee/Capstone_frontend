@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { Container, Form } from "react-bootstrap";
+import { Alert, Container, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
 
 function EditEquipmentComponent() {
+  const [show, setShow] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
+  const [alertHeading, setAlertHeading] = useState("");
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -66,10 +69,15 @@ function EditEquipmentComponent() {
       if (response.ok) {
         let data = await response.json();
         console.log(data);
-        alert("Prodotto modificato correttamente");
-        navigate("/details/" + id);
+        setAlertHeading("Modifica prodotto");
+        setAlertMsg("Prodotto modificato correttamente");
+        setShow(true);
+      } else {
       }
     } catch (error) {
+      setAlertHeading("Modifica prodotto");
+      setAlertMsg(error);
+      setShow(true);
       console.log(error);
     }
   };
@@ -106,7 +114,19 @@ function EditEquipmentComponent() {
   return (
     <Container className="mt-5">
       <h3>MODIFICA PRODOTTO</h3>
-
+      {show && (
+        <Alert
+          variant="light"
+          onClose={() => {
+            setShow(false);
+            navigate("/details/" + id);
+          }}
+          dismissible
+        >
+          <Alert.Heading>{alertHeading}</Alert.Heading>
+          <p>{alertMsg}</p>
+        </Alert>
+      )}
       <Form onSubmit={handleSubmit} className="">
         <Form.Group className="mb-3 mx-auto" controlId="brand" onChange={handleBrand}>
           <Form.Label>Brand</Form.Label>
