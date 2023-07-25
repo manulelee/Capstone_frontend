@@ -65,7 +65,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Container fluid className="text-center mt-2 mb-3 page-container">
+    <Container fluid className="text-center mt-2 mb-3 page-container" data-testid="loginPage">
       <div className="py-5 my-5">
         <p className="">
           Benvenuto su Rent and Ride

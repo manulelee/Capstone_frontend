@@ -72,12 +72,14 @@ function EditEquipmentComponent() {
         setAlertHeading("Modifica prodotto");
         setAlertMsg("Prodotto modificato correttamente");
         setShow(true);
+        window.scrollTo(0, 0);
       } else {
       }
     } catch (error) {
       setAlertHeading("Modifica prodotto");
       setAlertMsg(error);
       setShow(true);
+      window.scrollTo(0, 0);
       console.log(error);
     }
   };

@@ -49,11 +49,13 @@ function UserBookingComponent() {
         setAlertHeading("Elimina prenotazione");
         setAlertMsg("Prenotazione eliminata correttamente");
         setShow(true);
+        window.scrollTo(0, 0);
       }
     } catch (error) {
       setAlertHeading("Elimina prenotazione");
       setAlertMsg("Errore nell'eliminazione della prenotazione");
       setShow(true);
+      window.scrollTo(0, 0);
     }
   };
 

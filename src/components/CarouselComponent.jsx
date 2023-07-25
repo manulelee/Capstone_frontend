@@ -67,7 +67,7 @@ class CarouselComponent extends Component {
 
   render() {
     return (
-      <>
+      <span data-testid="carousel">
         <h2 className="text-start mt-5 mb-2 b mx-4">{this.props.category}:</h2>
         {this.state.isLoading && (
           <div className="text-center">
@@ -84,7 +84,7 @@ class CarouselComponent extends Component {
             </Carousel.Item>
           ))}
         </Carousel>
-      </>
+      </span>
     );
   }
 }

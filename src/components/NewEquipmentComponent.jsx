@@ -70,6 +70,7 @@ function NewEquipmentComponent() {
         console.log(data);
         alert("Prodotto inserito correttamente");
         handleClose();
+        window.scrollTo(0, 0);
         navigate(`/details/${data.id}`);
       }
     } catch (error) {

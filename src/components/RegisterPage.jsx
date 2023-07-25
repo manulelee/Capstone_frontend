@@ -80,7 +80,7 @@ function RegisterPage() {
   };
 
   return (
-    <Container fluid className="text-center mb-5 page-container">
+    <Container fluid className="text-center mb-5 page-container" data-testid="registerPage">
       <div className="py-5 ">
         {show && (
           <Alert

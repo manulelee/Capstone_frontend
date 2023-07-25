@@ -3,8 +3,8 @@ import CarouselComponent from "./CarouselComponent";
 
 const HomeComponent = () => {
   return (
-    <>
-      <Card className="banner m-3">
+    <span data-testid="homePage">
+      <Card className="banner m-3" data-testid="banner">
         <Card.Img
           variant="top"
           src="https://cdn.shopify.com/s/files/1/0377/3058/2573/t/1/assets/surfboardwasll_GDPp.jpeg?v=1644380509379"
@@ -28,7 +28,7 @@ const HomeComponent = () => {
       <CarouselComponent category="Windsurf"></CarouselComponent>
       <CarouselComponent category="Kitesurf"></CarouselComponent>
       <CarouselComponent category="Wakeboard"></CarouselComponent>
-    </>
+    </span>
   );
 };
 

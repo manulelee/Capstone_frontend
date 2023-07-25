@@ -20,7 +20,7 @@ function NavbarComponent() {
   };
 
   return (
-    <Navbar expand="lg" data-bs-theme="dark" className="bg-body-tertiary">
+    <Navbar expand="lg" data-bs-theme="dark" className="bg-body-tertiary" data-testid="navbar">
       <Container fluid>
         <Navbar.Brand id="title">Rent and ride</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
